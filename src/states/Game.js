@@ -4,7 +4,6 @@ import data from '../data/data.js'
 import Listeners from 'events'
 
 import Mushroom from '../sprites/Mushroom'
-import lang from '../lang'
 
 /** VARIABLES */
 var w = 1280/16,
@@ -74,6 +73,17 @@ export default class extends Phaser.State {
 	this.game.load.image('button', '../../assets/images/button_small.png')
 	this.game.load.image('close', '../../assets/images/close.png')
 	this.game.load.image('arrow', '../../assets/images/cursor.png')
+  this.game.load.image('earthchan-base', '../../assets/images/earthchan-base.png')
+  this.game.load.image('facials', '../../assets/images/facials.png')
+  this.game.load.image('drought', '../../assets/images/drought.png')
+  this.game.load.image('explosion_smoke', '../../assets/images/explosion_smoke.png')
+  this.game.load.image('hurricane', '../../assets/images/hurricane.png')
+  this.game.load.image('lava', '../../assets/images/lava.png')
+  this.game.load.image('lightning', '../../assets/images/lightning.png')
+  this.game.load.image('poisoncloud', '../../assets/images/poisoncloud.png')
+  this.game.load.image('smoke', '../../assets/images/smoke.png')
+  this.game.load.image('tornado', '../../assets/images/tornado.png')
+  this.game.load.image('waves', '../../assets/images/waves.png')
 	data.earthEvents.forEach(e => {
 		this.game.load.image(e.name, '../../assets/images/' + e.sprite)
 	})
@@ -83,6 +93,8 @@ export default class extends Phaser.State {
   create() {
 	var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
 	var fontStyle = { font: '15px monospace'}
+	let earthChanBase = this.game.add.tileSprite(0, 250, 2000, 2000, 'earthchan-base')
+  earthChanBase.scale.setTo(0.25,0.25)
 	
 	for(let i = 0; i < 9; i++){ tiles.push([]) }
 	
