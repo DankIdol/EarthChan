@@ -11,7 +11,9 @@ var w = 1280/16,
 	h = 720/9,
 	tiles = [],
 	listeners = new Listeners(),
-	popup
+	popup,
+	selectedTile,
+	popupGroup
 /** */
 
 
@@ -20,11 +22,16 @@ export default class extends Phaser.State {
   init() { }
   
   tileClickListener(tile, evt){
+  	console.log('tile click')
+  	selectedTile = tile.myId
+  	tiles.forEach(e => e.forEach(f => f.inputEnabled = false))
   	popup.scale.set(1)
   }
   
   popupClickListener(tile, evt){
-  	console.log(tile.myId[0])
+  	console.log('popup click')
+  	selectedTile = ''
+  	tiles.forEach(e => e.forEach(f => f.inputEnabled = true))
     popup.scale.set(0)
   }
   
@@ -48,11 +55,15 @@ export default class extends Phaser.State {
 		}
 
 	}
+	popupGroup = game.add.group()
+	
 	popup = this.game.add.sprite(game.world.centerX, game.world.centerY, 'popupBox')
 	popup.anchor.set(0.5)
 	popup.scale.set(0)
+	popup.inputEnabled = true
+	popup.events.onInputDown.add(this.popupClickListener, this)
 
-	
+	popupGroup.add(popup)
 
     /*this.mushroom = new Mushroom({
       game: this.game,
