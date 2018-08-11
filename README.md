@@ -1,5 +1,5 @@
 
-<img src="https://i.redd.it/dbxyb79hyg501.jpg" width="600" height="900">
+<img src="https://i.redd.it/dbxyb79hyg501.jpg" width="300" height="450">
 Our Ludum Dare 42 entry with theme **You are running out of time**
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
