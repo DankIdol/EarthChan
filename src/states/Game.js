@@ -34,15 +34,23 @@ export default class extends Phaser.State {
   	tiles.forEach(e => e.forEach(f => f.inputEnabled = true))
     popup.scale.set(0)
   }
+
+  buttonClick(){
+  	
+  }
   
   preload() { 
 	this.game.load.image('map', '../../assets/images/earth_map.jpg')
 	this.game.load.image('boundingBox', '../../assets/images/bound.png')
 	this.game.load.image('popupBox', '../../assets/images/popup.png')
+	this.game.load.image('button', '../../assets/images/button.png')
+	data.earthEvents.forEach(e => {
+		this.game.load.image(e.name, '../../assets/images/' + e.sprite)
+	})
   }
 
   create() {
-	this.game.add.sprite(0, 0, 'map')
+	this.game.add.tileSprite(0, 0, 1280, 720, 'map')
 	
 	for(let i = 0; i < 9; i++){ tiles.push([]) }
 	
@@ -62,6 +70,13 @@ export default class extends Phaser.State {
 	popup.scale.set(0)
 	popup.inputEnabled = true
 	popup.events.onInputDown.add(this.popupClickListener, this)
+
+	let i = 0
+	data.earthEvents.forEach(e => {
+		let btn = this.game.make.button(100, 100, 'button', this.buttonClick, this, 2, 1, 0)
+		this.game.add.text(i, i, e.name)
+		i+=30
+	})
 
 	popupGroup.add(popup)
 
