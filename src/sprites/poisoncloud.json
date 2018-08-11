@@ -1,0 +1,27 @@
+{"frames": [
+    {
+      "filename": "poisoncloud01",
+      "frame": {"x":100, "y": 150, "w": 160, "h": 100},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "poisoncloud02",
+      "frame": {"x":300, "y": 150, "w": 160, "h": 100},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "poisoncloud03",
+      "frame": {"x":520, "y": 150, "w": 160, "h": 100},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    }
+  ]
+}

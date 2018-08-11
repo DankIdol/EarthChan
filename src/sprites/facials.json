@@ -1,0 +1,35 @@
+{"frames": [
+    {
+      "filename": "neutral",
+      "frame": {"x":750, "y": 100, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "happy",
+      "frame": {"x":523, "y": 100, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "hurt",
+      "frame": {"x":750, "y": 330, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "wink",
+      "frame": {"x":523, "y": 328, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    }
+  ]
+}
