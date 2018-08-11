@@ -1,10 +1,32 @@
 export default {
   'areas' : [
     {
-      'type' : 'landlock'	
+      'type' : 'landlock',
+      'events' : [
+      	'epidemic',
+      	'earthquake',
+      	'volcanic eruption',
+      	'tornado'
+      ]
     },
     {
-      'type' : 'seaside'
+    	'type' : 'seaside',
+    	'events' : [
+	    	'epidemic',
+	    	'earthquake',
+	    	'tornado',
+	    	'tsunami',
+	    	'hurricane'
+    	]
+    },
+    {
+    	'type' : 'desert',
+	    'events' : [
+	    	'epidemic',
+	    	'earthquake',
+	    	'volcanic eruption',
+	    	'draught'
+    	]
     }
   ],
   
@@ -65,5 +87,8 @@ export default {
       'buildingCost' : 0.50,
       'sprite': 'hurricane.png'
     }
-  ]
+  ],
+  'values' : {
+  	'population' : 0
+  }
 }

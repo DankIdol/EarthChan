@@ -22,21 +22,20 @@ export default class extends Phaser.State {
   init() { }
   
   tileClickListener(tile, evt){
-  	console.log('tile click')
   	selectedTile = tile.myId
   	tiles.forEach(e => e.forEach(f => f.inputEnabled = false))
-  	popup.scale.set(1)
+  	btnGroup.children.forEach(e => e.scale.set(1))
+  	console.log(selectedTile)
   }
   
-  popupClickListener(tile, evt){
-  	console.log('popup click')
+  closeClickListener(tile, evt){
   	selectedTile = ''
   	tiles.forEach(e => e.forEach(f => f.inputEnabled = true))
-    popup.scale.set(0)
+  	btnGroup.children.forEach(e => e.scale.set(0))
   }
 
   buttonClickListener(button){
-  	btnGroup.children.forEach(e => e.scale.set(0.1))
+  	btnGroup.children.forEach(e => e.scale.set(0))
   }
   buttonUpListener(button){
   	btnGroup.children.forEach(e => e.scale.set(1))
@@ -47,6 +46,7 @@ export default class extends Phaser.State {
 	this.game.load.image('boundingBox', '../../assets/images/bound.png')
 	this.game.load.image('popupBox', '../../assets/images/popup.png')
 	this.game.load.image('button', '../../assets/images/button_small.png')
+	this.game.load.image('close', '../../assets/images/close.png')
 	data.earthEvents.forEach(e => {
 		this.game.load.image(e.name, '../../assets/images/' + e.sprite)
 	})
@@ -69,16 +69,17 @@ export default class extends Phaser.State {
 
 	}
 	btnGroup = game.add.group()
-	
-	popup = this.game.add.sprite(game.world.centerX, game.world.centerY, 'popupBox')
-	popup.anchor.set(0.5)
-	popup.scale.set(0)
-	popup.inputEnabled = true
-	popup.events.onInputDown.add(this.popupClickListener, this)
 
 	let i = 0,
 		offsetY1 = -135,
 		offsetY2 = -135
+
+	let closeBtn = this.game.add.sprite((1280 - 50), 50, 'close')
+	closeBtn.anchor.set(0.5)
+	btnGroup.add(closeBtn)
+	closeBtn.inputEnabled = true
+	closeBtn.events.onInputDown.add(this.closeClickListener, this)
+	
 	data.earthEvents.forEach(e => {
 		if(i < 4){
 			let btn = this.game.add.sprite(game.world.centerX - 145, game.world.centerY + offsetY1, 
@@ -114,6 +115,7 @@ export default class extends Phaser.State {
     })
 
     this.game.add.existing(this.mushroom)*/
+    btnGroup.children.forEach(e => e.scale.set(0))
   }
 
   render() {
