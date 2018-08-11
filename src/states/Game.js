@@ -13,7 +13,7 @@ var w = 1280/16,
 	listeners = new Listeners(),
 	popup,
 	selectedTile,
-	popupGroup
+	btnGroup
 /** */
 
 
@@ -35,22 +35,27 @@ export default class extends Phaser.State {
     popup.scale.set(0)
   }
 
-  buttonClick(){
-  	
+  buttonClickListener(button){
+  	btnGroup.children.forEach(e => e.scale.set(0.1))
+  }
+  buttonUpListener(button){
+  	btnGroup.children.forEach(e => e.scale.set(1))
   }
   
   preload() { 
 	this.game.load.image('map', '../../assets/images/earth_map.jpg')
 	this.game.load.image('boundingBox', '../../assets/images/bound.png')
 	this.game.load.image('popupBox', '../../assets/images/popup.png')
-	this.game.load.image('button', '../../assets/images/button.png')
+	this.game.load.image('button', '../../assets/images/button_small.png')
 	data.earthEvents.forEach(e => {
 		this.game.load.image(e.name, '../../assets/images/' + e.sprite)
 	})
+
   }
 
   create() {
-	this.game.add.tileSprite(0, 0, 1280, 720, 'map')
+	var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
+
 	
 	for(let i = 0; i < 9; i++){ tiles.push([]) }
 	
@@ -63,7 +68,7 @@ export default class extends Phaser.State {
 		}
 
 	}
-	popupGroup = game.add.group()
+	btnGroup = game.add.group()
 	
 	popup = this.game.add.sprite(game.world.centerX, game.world.centerY, 'popupBox')
 	popup.anchor.set(0.5)
@@ -71,14 +76,35 @@ export default class extends Phaser.State {
 	popup.inputEnabled = true
 	popup.events.onInputDown.add(this.popupClickListener, this)
 
-	let i = 0
+	let i = 0,
+		offsetY1 = -135,
+		offsetY2 = -135
 	data.earthEvents.forEach(e => {
-		let btn = this.game.make.button(100, 100, 'button', this.buttonClick, this, 2, 1, 0)
-		this.game.add.text(i, i, e.name)
-		i+=30
+		if(i < 4){
+			let btn = this.game.add.sprite(game.world.centerX - 145, game.world.centerY + offsetY1, 
+				'button')
+			btn.inputEnabled = true
+			btn.events.onInputDown.add(this.buttonClickListener, this)
+			btn.events.onInputUp.add(this.buttonUpListener, this)
+			let tx = this.game.add.text(game.world.centerX - 260, game.world.centerY + (offsetY1 - 30), e.name, 5)
+			btn.anchor.set(0.5)
+			offsetY1 += 90
+			btnGroup.add(btn)			
+			btnGroup.add(tx)			
+		}else{
+			let btn = this.game.add.sprite(game.world.centerX + 145, game.world.centerY + offsetY2, 
+				'button')
+			btn.inputEnabled = true
+			btn.events.onInputDown.add(this.buttonClickListener, this)
+			btn.events.onInputUp.add(this.buttonUpListener, this)
+			let tx = this.game.add.text(game.world.centerX + 40, game.world.centerY + (offsetY2 - 30), e.name)
+			btn.anchor.set(0.5)
+			offsetY2 += 90
+			btnGroup.add(btn)
+			btnGroup.add(tx)
+		}
+		i++
 	})
-
-	popupGroup.add(popup)
 
     /*this.mushroom = new Mushroom({
       game: this.game,
