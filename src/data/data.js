@@ -35,7 +35,7 @@ export default {
   
   'earthEvents' : [
     {
-      'name' : 'epidemic',
+      'name' : 'poison',
       'cooldown' : 30000,
       'humanCost' : 0.25,
       'buildingCost': 0,

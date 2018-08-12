@@ -19,7 +19,8 @@ var w = 1280/16,
   mood = 'neutral',
   fontStyle,
   cooldownText = [],
-  totalPopulation
+  totalPopulation,
+  earthEventGroup
 /** */
 
 
@@ -67,12 +68,6 @@ export default class extends Phaser.State {
       selectedArrow = null
     }
   }
-  arrowTriggerSelectListener(arrow){
-    alert()
-    if(selectedArrow != null){
-      console.log(selectedArrow)
-    }
-  }
 
   playAction(direction) {
     const currentAction = selectedAction
@@ -92,7 +87,6 @@ export default class extends Phaser.State {
 
 	    data.earthEvents.forEach(e => {
 	      if(e.name == currentAction){
-	      console.log('asd')
 	      	tiles[selectedTile[0]][selectedTile[1]].myPopulation *= e.humanCost
 	      }
 	    })
@@ -141,13 +135,10 @@ export default class extends Phaser.State {
   }
 
   create() {
-    var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
+    var background = this.game.add.sprite(0, 0, 'map')
     //background.tint = 0xcccccc
     fontStyle = { font: '15px monospace' }
-    let earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
 
-    earthChanBase.scale.setTo(0.2,0.2)
-    mood = this.game.add.sprite(110, 440, 'facials', 'neutral')
     for(let i = 0; i < 9; i++){ tiles.push([]) }
 
     for(let i=0;i<9;i++){
@@ -157,13 +148,13 @@ export default class extends Phaser.State {
         tiles[i][j].inputEnabled = true			
         tiles[i][j].myId = [i, j]
         tiles[i][j].myType = tileData[i][j].type
-        tiles[i][j].myPopulation = tileData[i][j].population
-        //this.game.add.text(j * w, i * h,tiles[i][j].myPopulation, { font: '15px', fill: 'lightgreen' })
+        tiles[i][j].myPopulation = tileData[i][j].population
         tiles[i][j].events.onInputDown.add(this.tileClickListener, this)
       }
 
     }
-    btnGroup = game.add.group()
+    btnGroup = game.add.group()
+    earthEventGroup = game.add.group()
 
     let i = 0,
       offsetY1 = -140,
@@ -183,9 +174,9 @@ export default class extends Phaser.State {
         btn.action = e
         btn.events.onInputDown.add(this.buttonClickListener, this)
         btn.events.onInputUp.add(this.buttonUpListener, this)
-        let tx = this.game.add.text(game.world.centerX - 260, game.world.centerY + (offsetY1 - 25), 
+        let tx = this.game.add.text(game.world.centerX - 265, game.world.centerY + (offsetY1 - 25), 
           e.name + '\nCD: ' + (e.cooldown/60000).toFixed(1) + 
-          'm HE: ' + e.humanCost + ' BE: ' + e.buildingCost, fontStyle)
+          'm effectiveness: ' + e.humanCost, fontStyle)
         btn.anchor.set(0.5)
         offsetY1 += 90
         btnGroup.add(btn)			
@@ -197,9 +188,9 @@ export default class extends Phaser.State {
         btn.action = e
         btn.events.onInputDown.add(this.buttonClickListener, this)
         btn.events.onInputUp.add(this.buttonUpListener, this)
-        let tx = this.game.add.text(game.world.centerX + 30, game.world.centerY + (offsetY2 - 30),
+        let tx = this.game.add.text(game.world.centerX + 25, game.world.centerY + (offsetY2 - 25),
           e.name + '\nCD: ' + (e.cooldown/60000).toFixed(1) + 
-          'm HE: ' + e.humanCost + ' BE: ' + e.buildingCost, fontStyle)
+          'm effectiveness: ' + e.humanCost, fontStyle)
         btn.anchor.set(0.5)
         offsetY2 += 90
         btnGroup.add(btn)
@@ -234,8 +225,7 @@ export default class extends Phaser.State {
       e.scale.set(0)
       e.input.enableDrag()
       e.events.onInputOver.add(this.arrowSelectListener, this)
-      e.events.onInputOut.add(this.arrowDeSelectListener, this)
-      e.events.onInputUp.add(this.arrowTriggerSelectListener, this)
+      e.events.onInputOut.add(this.arrowDeSelectListener, this)
     })
 
     btnGroup.children.forEach(e => e.scale.set(0))
@@ -250,6 +240,11 @@ export default class extends Phaser.State {
       offset += 16
       cooldownText.push(tx)
     })
+
+    var earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
+
+    earthChanBase.scale.setTo(0.2,0.2)
+    mood = this.game.add.sprite(110, 440, 'facials', 'neutral')
     
     totalPopulation = this.game.add.text(game.world.centerX, 700, '[*** ]', { font: '20px monospace bold', fill: '#331100'})
     totalPopulation.anchor.set(0.5)
@@ -274,7 +269,7 @@ export default class extends Phaser.State {
       cooldownText[i++].text = (e.value == 0 ? (e.name + ': READY') : (e.name + ': ' + (e.value/1000) ))
     })
     totalPopulation.text = 'humans: ['
-    for(let i = 0; i < vars.totalPopulation; i += 350000000){
+    for(let i = 0; i < vars.totalPopulation; i += 100000000){
       totalPopulation.text += '⏹'
     }
     totalPopulation.text += ']'
@@ -285,6 +280,6 @@ export default class extends Phaser.State {
       if(el.myPopulation > 1350000) el.tint = 0xff00aa
       totalPopCounter += el.myPopulation 
     }))
-    ///vars.totalPopulation = totalPopCounter
+    vars.totalPopulation = totalPopCounter
   }
 }
