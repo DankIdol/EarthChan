@@ -20,7 +20,8 @@ var w = 1280/16,
   showArrows = false,
   mood = 'neutral',
   fontStyle,
-  cooldownText = []
+  cooldownText = [],
+  totalPopulation
 /** */
 
 
@@ -32,7 +33,7 @@ export default class extends Phaser.State {
     selectedTile = tile.myId
     tiles.forEach(e => e.forEach(f => f.inputEnabled = false))
     btnGroup.children.forEach(e => e.scale.set(1))
-    tiles[selectedTile[0]][selectedTile[1]].tint = 0x00ffff
+    tiles[selectedTile[0]][selectedTile[1]].tint = 0x00eeff
   }
 
   closeClickListener(tile, evt){
@@ -134,7 +135,8 @@ export default class extends Phaser.State {
   }
 
   create() {
-    var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
+    var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
+    background.tint = 0x999999
     fontStyle = { font: '15px monospace' }
     let earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
 
@@ -145,7 +147,7 @@ export default class extends Phaser.State {
     for(let i=0;i<9;i++){
       for(let j=0;j<16;j++){
         tiles[i][j] = this.game.add.sprite(j * w, i * h, 'boundingBox')			
-        this.game.add.text(j * w, i * h,tileData[i][j].type, { font: '15px', fill: 'lightgreen' })			
+        //this.game.add.text(j * w, i * h,tileData[i][j].type, { font: '15px', fill: 'lightgreen' })			
         tiles[i][j].inputEnabled = true			
         tiles[i][j].myId = [i, j]
         tiles[i][j].myType = tileData[i][j].type
@@ -241,6 +243,9 @@ export default class extends Phaser.State {
       offset += 16
       cooldownText.push(tx)
     })
+    
+    totalPopulation = this.game.add.text(game.world.centerX, 630, '[*** ]', { font: '20px monospace bold', fill: 'white'})
+    totalPopulation.anchor.set(0.5)
 
     setInterval(() => {
     	vars.timers.forEach(e => {
@@ -254,7 +259,17 @@ export default class extends Phaser.State {
   render() {
     let i = 0
     vars.timers.forEach(e => {
-    	cooldownText[i++].text = (e.value == 0 ? (e.name + ': READY') : (e.name + ': ' + (e.value/1000) ))
-    })
+      cooldownText[i++].text = (e.value == 0 ? (e.name + ': READY') : (e.name + ': ' + (e.value/1000) ))
+    })
+    totalPopulation.text = 'humans: ['
+    for(let i = 0; i < vars.totalPopulation; i += 35000000){
+      totalPopulation.text += '⏹'
+    }
+    totalPopulation.text += ']'
+
+    tiles.forEach(e => e.forEach(el => {
+      if(el.tint != 0x00eeff) el.tint = 0xff8000
+      if(el.myPopulation > 1350000) el.tint = 0xffffee
+    }))
   }
 }
