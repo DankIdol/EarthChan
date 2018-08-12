@@ -30,6 +30,30 @@
       "trimmed": true,
       "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
       "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "crying",
+      "frame": {"x":290, "y": 550, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "angry",
+      "frame": {"x":50, "y": 515, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
+    },
+    {
+      "filename": "dizzy",
+      "frame": {"x":525, "y": 540, "w": 185, "h": 160},
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {"x":0,"y":0,"w":66,"h":66},
+      "sourceSize": {"w":66,"h":66}
     }
   ]
 }
