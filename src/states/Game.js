@@ -136,7 +136,7 @@ export default class extends Phaser.State {
 
   create() {
     var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
-    background.tint = 0x999999
+    //background.tint = 0xcccccc
     fontStyle = { font: '15px monospace' }
     let earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
 
@@ -147,11 +147,12 @@ export default class extends Phaser.State {
     for(let i=0;i<9;i++){
       for(let j=0;j<16;j++){
         tiles[i][j] = this.game.add.sprite(j * w, i * h, 'boundingBox')			
-        //this.game.add.text(j * w, i * h,tileData[i][j].type, { font: '15px', fill: 'lightgreen' })			
+        			
         tiles[i][j].inputEnabled = true			
         tiles[i][j].myId = [i, j]
         tiles[i][j].myType = tileData[i][j].type
-        tiles[i][j].myPopulation = tileData[i][j].population
+        tiles[i][j].myPopulation = tileData[i][j].population
+        //this.game.add.text(j * w, i * h,tiles[i][j].myPopulation, { font: '15px', fill: 'lightgreen' })
         tiles[i][j].events.onInputDown.add(this.tileClickListener, this)
       }
 
@@ -244,16 +245,21 @@ export default class extends Phaser.State {
       cooldownText.push(tx)
     })
     
-    totalPopulation = this.game.add.text(game.world.centerX, 630, '[*** ]', { font: '20px monospace bold', fill: 'white'})
+    totalPopulation = this.game.add.text(game.world.centerX, 700, '[*** ]', { font: '20px monospace bold', fill: '#331100'})
     totalPopulation.anchor.set(0.5)
 
     setInterval(() => {
-    	vars.timers.forEach(e => {
-    		if (e.value != 0){
-    			e.value -= 1000
-    		}
-    	})
-    }, 1000)
+      vars.timers.forEach(e => {
+        if (e.value != 0){
+          e.value -= 1000
+        }
+   	  })
+    }, 1000)
+    setInterval(() => {
+      tiles.forEach(e=>e.forEach(el=>{
+      	el.myPopulation *= Math.random() * (1.3 - 1.03) + 1.03;
+      }))
+    }, 3000)
   }
 
   render() {
@@ -267,9 +273,13 @@ export default class extends Phaser.State {
     }
     totalPopulation.text += ']'
 
+    let totalPopCounter = 0
     tiles.forEach(e => e.forEach(el => {
       if(el.tint != 0x00eeff) el.tint = 0xff8000
-      if(el.myPopulation > 1350000) el.tint = 0xffffee
+      if(el.myPopulation > 1350000) el.tint = 0xff00aa
+      totalPopCounter += el.myPopulation 
     }))
+    console.log(totalPopCounter)
+    vars.totalPopulation = totalPopCounter
   }
 }
