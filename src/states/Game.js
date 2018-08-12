@@ -2,9 +2,7 @@
 import Phaser from 'phaser'
 import data from '../data/data.js'
 import vars from '../currentVars.js'
-import tileData from '../data/tileInfo.js'
-
-import Mushroom from '../sprites/Mushroom'
+import tileData from '../data/tileInfo.js'
 
 /** VARIABLES */
 var w = 1280/16,
@@ -80,7 +78,7 @@ export default class extends Phaser.State {
     const currentAction = selectedAction
     const currentCd = selectedCd
     let onCd = false
-	console.log(currentAction)
+	//console.log(currentAction)
     vars.timers.forEach(e => {
       if(e.name == currentAction){
         if(e.value != 0) onCd = true
@@ -90,7 +88,15 @@ export default class extends Phaser.State {
 
     if(!onCd){
 	    let x = (selectedTile[1])*80
-	    let y = selectedTile[0]*85.3333
+	    let y = selectedTile[0]*85.3333
+
+	    data.earthEvents.forEach(e => {
+	      if(e.name == currentAction){
+	      console.log('asd')
+	      	tiles[selectedTile[0]][selectedTile[1]].myPopulation *= e.humanCost
+	      }
+	    })
+	    
 	    if (selectedArrow === 2) x = (selectedTile[1]-1)*80
 	    else if (selectedArrow === 3) x = (selectedTile[1]+1)*80
 	    else if (selectedArrow === 0) y = (selectedTile[0]-1)*85.3333
@@ -257,7 +263,7 @@ export default class extends Phaser.State {
     }, 1000)
     setInterval(() => {
       tiles.forEach(e=>e.forEach(el=>{
-      	el.myPopulation *= Math.random() * (1.3 - 1.03) + 1.03;
+      	if(el.myPopulation > 0) el.myPopulation *= (Math.random() * (1.3 - 1.03) + 1.03);
       }))
     }, 3000)
   }
@@ -268,7 +274,7 @@ export default class extends Phaser.State {
       cooldownText[i++].text = (e.value == 0 ? (e.name + ': READY') : (e.name + ': ' + (e.value/1000) ))
     })
     totalPopulation.text = 'humans: ['
-    for(let i = 0; i < vars.totalPopulation; i += 35000000){
+    for(let i = 0; i < vars.totalPopulation; i += 350000000){
       totalPopulation.text += '⏹'
     }
     totalPopulation.text += ']'
@@ -279,7 +285,6 @@ export default class extends Phaser.State {
       if(el.myPopulation > 1350000) el.tint = 0xff00aa
       totalPopCounter += el.myPopulation 
     }))
-    console.log(totalPopCounter)
-    vars.totalPopulation = totalPopCounter
+    ///vars.totalPopulation = totalPopCounter
   }
 }

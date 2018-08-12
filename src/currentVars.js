@@ -9,6 +9,6 @@ export default{
 		{'name' : 'tornado', 'value' : 0, 'max' : 50000},
 		{'name' : 'hurricane', 'value' : 0, 'max' : 120000}
 	],
-	'totalPopulation' : 1000000
+	'totalPopulation' : 7000000000
 	
 }

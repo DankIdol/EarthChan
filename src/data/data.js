@@ -51,7 +51,7 @@ export default {
       'timer': false
     },
     {
-      'name' : 'volcanic eruption',
+      'name' : 'lava',
       'cooldown' : 300000,
       'humanCost' : 1,
       'buildingCost' : 1,
