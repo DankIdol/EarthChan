@@ -35,13 +35,12 @@ export default {
   
   'earthEvents' : [
     {
-      'name' : 'epidemic',
+      'name' : 'poison',
       'cooldown' : 30000,
       'humanCost' : 0.25,
       'buildingCost': 0,
       'sprite': 'poisoncloud.png',
-      'timer': false,
-      'sound': null
+      'timer': false
     },
     {
       'name' : 'earthquake',
@@ -49,17 +48,15 @@ export default {
       'humanCost' : 0.25,
       'buildingCost' : 0.75,
       'sprite': 'smoke.png', // FIXME
-      'timer': false,
-      'sound': null
+      'timer': false
     },
     {
-      'name' : 'volcanic eruption',
+      'name' : 'lava',
       'cooldown' : 300000,
       'humanCost' : 1,
       'buildingCost' : 1,
       'sprite': 'lava.png',
-      'timer': false,
-      'sound': 'lava.ogg'
+      'timer': false
     },
     {
       'name' : 'tsunami',
@@ -67,8 +64,7 @@ export default {
       'humanCost' : 0.75,
       'buildingCost' : 0.75,
       'timer': false,
-      'sprite': 'waves.png',
-      'sound': 'storm.ogg'
+      'sprite': 'waves.png'
     },
     {
       'name' : 'flood',
@@ -76,8 +72,7 @@ export default {
       'humanCost' : 0.26,
       'buildingCost' : 0.25,
       'sprite': 'waves.png',
-      'timer': false,
-      'sound': 'waves.ogg'
+      'timer': false
     },
     {
       'name' : 'drought',
@@ -85,8 +80,7 @@ export default {
       'humanCost' : 0.20,
       'buildingCost' : 0,
       'sprite': 'drought.png',
-      'timer': false,
-      'sound': null
+      'timer': false
     },
     {
       'name' : 'tornado',
@@ -94,8 +88,7 @@ export default {
       'humanCost' : 0.10,
       'buildingCost' : 0.40,
       'sprite': 'tornado.png',
-      'timer': false,
-      'sound': 'tornado.ogg'
+      'timer': false
     },
     {
       'name' : 'hurricane',
@@ -103,8 +96,7 @@ export default {
       'humanCost' : 0.50,
       'buildingCost' : 0.50,
       'sprite': 'tornado.png',
-      'timer': false,
-      'sound': 'storm.ogg'
+      'timer': false
     }
   ]
 }
