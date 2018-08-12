@@ -121,7 +121,6 @@ export default class extends Phaser.State {
       soundboard[currentSound].play()   
     }
   }
-
   preload() { 
     this.game.load.image('map', '../../assets/images/earth_map.jpg')
     this.game.load.image('boundingBox', '../../assets/images/bound.png')
@@ -131,6 +130,7 @@ export default class extends Phaser.State {
     this.game.load.image('arrow', '../../assets/images/cursor.png')
     this.game.load.image('earthchan-base', '../../assets/images/earthchan-base.png')
     this.game.load.atlas('facials', '../../assets/images/facials.png', 'src/sprites/facials.json')
+    this.game.load.image('easteregg', '../../assets/images/easteregg.png')
     data.earthEvents.forEach(e => {
       const baseName = e.sprite.replace('.png', '')
       this.game.load.atlas(baseName, '../../assets/images/' + e.sprite, 'src/sprites/'+baseName+'.json')
@@ -257,8 +257,8 @@ export default class extends Phaser.State {
       offset += 16
       cooldownText.push(tx)
     })
-
-    totalPopulation = this.game.add.text(game.world.centerX, 630, '[*** ]', { font: '20px monospace bold', fill: 'white'})
+    
+    totalPopulation = this.game.add.text(game.world.centerX, 700, '[*** ]', { font: '20px monospace bold', fill: '#331100'})
     totalPopulation.anchor.set(0.5)
 
     setInterval(() => {
@@ -266,8 +266,42 @@ export default class extends Phaser.State {
         if (e.value != 0){
           e.value -= 1000
         }
-      })
+   	  })
     }, 1000)
+    setInterval(() => {
+      tiles.forEach(e=>e.forEach(el=>{
+      	el.myPopulation *= Math.random() * (1.3 - 1.03) + 1.03;
+      }))
+    }, 3000)
+		window.easterEgg = (goldenKey) => {
+		function sha256(str) {
+			var buffer = new TextEncoder("utf-8").encode(str);
+			return crypto.subtle.digest("SHA-256", buffer).then(function (hash) {
+				return hex(hash);
+			});
+		}
+
+		function hex(buffer) {
+			var hexCodes = [];
+			var view = new DataView(buffer);
+			for (var i = 0; i < view.byteLength; i += 4) {
+				var value = view.getUint32(i)
+				var stringValue = value.toString(16)
+				var padding = '00000000'
+				var paddedValue = (padding + stringValue).slice(-padding.length)
+				hexCodes.push(paddedValue);
+			}
+
+			return hexCodes.join("");
+		}
+
+		sha256(goldenKey).then((digest) => {
+			if(digest !== "a4a4db5d13cc2e00f26bd48597bfe25b43ff62c9ab66607568274f7b5af3222e") return
+			mood.destroy(true)
+			const ahegaoFace = this.game.add.sprite(95,430, 'easteregg')
+		});
+	}
+		
   }
 
   render() {
@@ -281,9 +315,13 @@ export default class extends Phaser.State {
     }
     totalPopulation.text += ']'
 
+    let totalPopCounter = 0
     tiles.forEach(e => e.forEach(el => {
       if(el.tint != 0x00eeff) el.tint = 0xff8000
-      if(el.myPopulation > 1350000) el.tint = 0xffffee
+      if(el.myPopulation > 1350000) el.tint = 0xff00aa
+      totalPopCounter += el.myPopulation 
     }))
+    console.log(totalPopCounter)
+    vars.totalPopulation = totalPopCounter
   }
 }
