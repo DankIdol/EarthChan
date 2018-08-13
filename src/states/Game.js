@@ -149,9 +149,7 @@ export default class extends Phaser.State {
     var background = this.game.add.tileSprite(0, 0, 1280, 720, 'map')
     background.tint = 0x999999
     fontStyle = { font: '15px monospace' }
-    let earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
 
-    earthChanBase.scale.setTo(0.2,0.2)
     mood = this.game.add.sprite(110, 440, 'facials', 'neutral')
     for(let i = 0; i < 9; i++){ tiles.push([]) }
 
