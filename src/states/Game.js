@@ -257,6 +257,13 @@ export default class extends Phaser.State {
       offset += 16
       cooldownText.push(tx)
     })
+
+    var earthChanBase = this.game.add.tileSprite(0, 320, 2000, 2000, 'earthchan-base')
+
+
+    earthChanBase.scale.setTo(0.2,0.2)
+
+    mood = this.game.add.sprite(110, 440, 'facials', 'neutral')
     
     totalPopulation = this.game.add.text(game.world.centerX, 700, '[*** ]', { font: '20px monospace bold', fill: '#331100'})
     totalPopulation.anchor.set(0.5)
@@ -270,7 +277,7 @@ export default class extends Phaser.State {
     }, 1000)
     setInterval(() => {
       tiles.forEach(e=>e.forEach(el=>{
-      	el.myPopulation *= Math.random() * (1.3 - 1.03) + 1.03;
+      	if(el.myPopulation > 0) el.myPopulation *= (Math.random() * (1.3 - 1.03) + 1.03);
       }))
     }, 3000)
 		window.easterEgg = (goldenKey) => {
@@ -310,7 +317,7 @@ export default class extends Phaser.State {
       cooldownText[i++].text = (e.value == 0 ? (e.name + ': READY') : (e.name + ': ' + (e.value/1000) ))
     })
     totalPopulation.text = 'humans: ['
-    for(let i = 0; i < vars.totalPopulation; i += 35000000){
+    for(let i = 0; i < vars.totalPopulation; i += 100000000){
       totalPopulation.text += '⏹'
     }
     totalPopulation.text += ']'
@@ -321,7 +328,6 @@ export default class extends Phaser.State {
       if(el.myPopulation > 1350000) el.tint = 0xff00aa
       totalPopCounter += el.myPopulation 
     }))
-    console.log(totalPopCounter)
     vars.totalPopulation = totalPopCounter
   }
 }
